@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/allResults.css" />
+</head>
+<body>
+
+  <main class="container page-grid">
+    <aside class="filters" aria-label="Filters">
+      <div class="filter-card">
+        <h3>Filters</h3>
+
+        <label class="filter-group">
+          <span class="label-title">Building Found</span>
+          <div class="options">
+            <label><input type="radio" name="building" checked /> Any</label>
+            <label><input type="radio" name="building" /> Halsey</label>
+            <label><input type="radio" name="building" /> Polk</label>
+            <label><input type="radio" name="building" /> Sage</label>
+          </div>
+        </label>
+
+
+        <div class="filter-actions">
+          <button class="btn">Reset</button>
+          <button class="btn primary">Apply</button>
+        </div>
+      </div>
+    </aside>
+
+    <section class="results" aria-label="Search results">
+      <div class="all-results">
+        <div>
+          <strong>All Results</strong> 
+        </div>
+      </div>
+
+      <div class="cards-grid">
+        <article class="item-card">
+          <img class="photo" 
+               src="https://www.ecovessel.com/cdn/shop/files/EVWAVE24OCS_Wave24oz_EastmanTritanPlasticWaterBottle_CoralSands.jpg?v=1724769575&width=1920"
+               alt="photo of lost item"/>
+          
+          <div class="card-body">
+            <h3 class="item-name">Waterbottle</h3>
+            <p class="location-found">Halsey</p>
+            <p class="desc">Orange waterbottle found outside of Halsey 205</p>
+            <div class="card-actions">
+              <a class="btn outline" href="#">Claim</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="item-card">
+          <img class="photo" 
+               src="https://i.ebayimg.com/images/g/csIAAOSw-ZJeOXW4/s-l1600.webp"
+               alt="photo of lost item"/>
+          
+          <div class="card-body">
+            <h3 class="item-name">Rick Astley T-Shirt + Jorts</h3>
+            <p class="location-found">Sage</p>
+            <p class="desc">Awesome outfit found in Sage basement</p>
+            <div class="claim-btn">
+              <a class="btn outline" href="#">Claim</a>
+            </div>
+          </div>
+        </article>
+        
+
+      </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div>Lost and Found app</div>
+    </div>
+  </footer>
+</body>
+</html>

@@ -73,6 +73,18 @@ app.use((req, res, next) => {
 // const indexRouter = require('./routes/index');
 // app.use('/', indexRouter);
 
+app.get('/register', (req, res) => {
+  res.render('register', { title: 'register' });
+});
+
+app.get('/login', (req, res) => {
+  res.render('login', { title: 'login' });
+});
+
+app.get('/allResults', (req, res) => {
+  res.render('allResults', { title: 'All Results' });
+});
+
 // Placeholder home route
 app.get('/', csrfProtection, (req, res) => {
   res.render('index', {
@@ -80,6 +92,10 @@ app.get('/', csrfProtection, (req, res) => {
     csrfToken: req.csrfToken(),
   });
 });
+
+
+
+
 
 // 404 handler
 app.use((req, res) => {
@@ -112,3 +128,9 @@ app.use((err, req, res, _next) => {
 });
 
 module.exports = app;
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`✅ Server running on http://localhost:${PORT}`);
+});
+
