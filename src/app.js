@@ -39,9 +39,15 @@ app.set('views', path.join(__dirname, 'views'));
 // Body parsing middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const uploadRoutes = require('./routes/upload');
+app.use('/upload', uploadRoutes);
+
+
+
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
 
 // Session configuration
 app.use(
@@ -83,6 +89,10 @@ app.get('/login', (req, res) => {
 
 app.get('/allResults', (req, res) => {
   res.render('allResults', { title: 'All Results' });
+});
+
+app.get('/upload', (req, res) => {
+  res.render('upload', { title: 'upload' });
 });
 
 // Placeholder home route
