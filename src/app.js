@@ -119,6 +119,10 @@ app.get('/upload', (req, res) => {
   res.render('upload', { title: 'upload' });
 });
 
+app.get('/upload', (req, res) => {
+  res.render('upload', { title: 'upload' });
+});
+
 // Placeholder home route
 app.get('/', csrfProtection, (req, res) => {
   res.render('index', {
