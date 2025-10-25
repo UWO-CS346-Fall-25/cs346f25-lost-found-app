@@ -1,83 +1,101 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title><%= title %></title>
-  <link rel="stylesheet" href="/css/global.css" />
-  <link rel="stylesheet" href="/css/allResults.css" />
-  
-</head>
-<body>
-  <%- include('partials/header'); %>
-  <main class="container page-grid">
-    <aside class="filters" aria-label="Filters">
-      <div class="filter-card">
-        <h3>Filters</h3>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/global.css" />
+    <link rel="stylesheet" href="/css/allResults.css" />
+  </head>
+  <body>
+    <%- include('partials/header'); %>
+    <main class="container page-grid">
+      <aside class="filters" aria-label="Filters">
+        <div class="filter-card">
+          <h3>Filters</h3>
 
-        <label class="filter-group">
-          <span class="label-title">Building Found</span>
-          <div class="options">
-            <label><input type="radio" name="building" checked /> Any</label>
-            <label><input type="radio" name="building" /> Halsey</label>
-            <label><input type="radio" name="building" /> Polk</label>
-            <label><input type="radio" name="building" /> Sage</label>
-          </div>
-        </label>
-
-
-        <div class="filter-actions">
-          <button class="btn">Reset</button>
-          <button class="btn primary">Apply</button>
-        </div>
-      </div>
-    </aside>
-
-    <section class="results" aria-label="Search results">
-      <div class="all-results">
-        <div>
-          <strong>All Results</strong> 
-        </div>
-      </div>
-
-      <div class="cards-grid">
-        <article class="item-card">
-          <img class="photo" 
-               src="https://www.ecovessel.com/cdn/shop/files/EVWAVE24OCS_Wave24oz_EastmanTritanPlasticWaterBottle_CoralSands.jpg?v=1724769575&width=1920"
-               alt="photo of lost item"/>
-          
-          <div class="card-body">
-            <h3 class="item-name">Waterbottle</h3>
-            <p class="location-found">Halsey</p>
-            <p class="desc">Orange waterbottle found outside of Halsey 205</p>
-            <div class="card-actions">
-              <a class="btn outline" href="#">Claim</a>
+          <label class="filter-group">
+            <span class="label-title">Building Found</span>
+            <div class="options">
+              <label><input type="radio" name="building" checked /> Any</label>
+              <label><input type="radio" name="building" /> Halsey</label>
+              <label><input type="radio" name="building" /> Polk</label>
+              <label><input type="radio" name="building" /> Sage</label>
             </div>
-          </div>
-        </article>
+          </label>
 
-        <article class="item-card">
-          <img class="photo" 
-               src="https://i.ebayimg.com/images/g/csIAAOSw-ZJeOXW4/s-l1600.webp"
-               alt="photo of lost item"/>
-          
-          <div class="card-body">
-            <h3 class="item-name">Rick Astley T-Shirt + Jorts</h3>
-            <p class="location-found">Sage</p>
-            <p class="desc">Awesome outfit found in Sage basement</p>
-            <div class="claim-btn">
-              <a class="btn outline" href="#">Claim</a>
+          <div class="filter-actions">
+            <button class="btn">Reset</button>
+            <button class="btn primary">Apply</button>
+          </div>
+        </div>
+      </aside>
+
+      <section class="results" aria-label="Search results">
+        <div class="all-results">
+          <div>
+            <strong>All Results</strong>
+          </div>
+        </div>
+
+        <div class="cards-grid">
+          <!-- <article class="item-card">
+            <img class="photo" 
+                 src="https://www.ecovessel.com/cdn/shop/files/EVWAVE24OCS_Wave24oz_EastmanTritanPlasticWaterBottle_CoralSands.jpg?v=1724769575&width=1920"
+                 alt="photo of lost item"/>
+            
+            <div class="card-body">
+              <h3 class="item-name">Waterbottle</h3>
+              <p class="location-found">Halsey</p>
+              <p class="desc">Orange waterbottle found outside of Halsey 205</p>
+              <div class="card-actions">
+                <a class="btn outline" href="#">Claim</a>
+              </div>
             </div>
-          </div>
-        </article>
-        
+          </article>
 
-      </div>
-  </main>
-  <%- include('partials/footer'); %>
+          <article class="item-card">
+            <img class="photo" 
+                 src="https://i.ebayimg.com/images/g/csIAAOSw-ZJeOXW4/s-l1600.webp"
+                 alt="photo of lost item"/>
+            
+            <div class="card-body">
+              <h3 class="item-name">Rick Astley T-Shirt + Jorts</h3>
+              <p class="location-found">Sage</p>
+              <p class="desc">Awesome outfit found in Sage basement</p>
+              <div class="claim-btn">
+                <a class="btn outline" href="#">Claim</a>
+              </div>
+            </div>
+          </article> -->
+          
+          <!-- Dynamic content -->
+          <% if (Array.isArray(lostItems) && lostItems.length) { %>
+            <% lostItems.forEach(function(item){ %>
+              <article class="item-card">
+                <img class="photo" 
+                     src="<%= item.image %>"
+                     alt="photo of <%= item.name %>" />
+                
+                <div class="card-body">
+                  <h3 class="item-name"><%= item.name %></h3>
+                  <p class="location-found"><%= item.location %></p>
+                  <p class="desc"><%= item.description %></p>
+                  <div class="card-actions">
+                    <a class="btn outline" href="#">Claim</a>
+                  </div>
+                </div>
+              </article>
+            <% }); %>
+          <% } else { %>
+            <p>No items found.</p>
+          <% } %>
+        </div>
+      </section>
+    </main>
+    
+    <%- include('partials/footer'); %>
 
-
-
-  <script src="/js/claimAlert.js"></script>
-</body>
+    <script src="/js/claimAlert.js"></script>
+  </body>
 </html>

@@ -12,10 +12,10 @@
 const lostItems = [
   {
     id: 1,
-    name: "Rick Astley T-Shirt + Jorts",
+    name: "Baby Yoda",
     location: "Sage",
-    description: "Awesome outfit found in Sage basement",
-    image: "https://i.ebayimg.com/images/g/csIAAOSw-ZJeOXW4/s-l1600.webp"
+    description: "Extraterrestrial being found in sage",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAt2kdcVjQywWpAi27E6aa9IuWp3kofXuFugp8PFZkeclFwP8sJhSCkk2Fn_F1vQtgSDvuuybYr1nFDTtkn-pqUCt4tpBFG99CW_NfMeUL-w"
   },
   {
     id: 2,
@@ -109,7 +109,10 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/allResults', (req, res) => {
-  res.render('allResults', { title: 'All Results' });
+  res.render('allResults', { 
+    title: 'All Results', 
+    lostItems // this passes the array to your EJS
+  });
 });
 
 app.get('/upload', (req, res) => {
