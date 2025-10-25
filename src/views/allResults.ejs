@@ -4,11 +4,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title><%= title %></title>
-  <link rel="stylesheet" href="/css/allResults.css" />
   <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/allResults.css" />
+  
 </head>
 <body>
-
+  <%- include('partials/header'); %>
   <main class="container page-grid">
     <aside class="filters" aria-label="Filters">
       <div class="filter-card">
@@ -73,6 +74,7 @@
 
       </div>
   </main>
+  <%- include('partials/footer'); %>
 
 
 

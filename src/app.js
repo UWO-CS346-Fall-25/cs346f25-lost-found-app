@@ -9,6 +9,26 @@
  * - Error handling
  */
 
+const lostItems = [
+  {
+    id: 1,
+    name: "Rick Astley T-Shirt + Jorts",
+    location: "Sage",
+    description: "Awesome outfit found in Sage basement",
+    image: "https://i.ebayimg.com/images/g/csIAAOSw-ZJeOXW4/s-l1600.webp"
+  },
+  {
+    id: 2,
+    name: "Waterbottle",
+    location: "Library",
+    description: "Black case near study cubicles",
+    image: "https://www.ecovessel.com/cdn/shop/files/EVWAVE24OCS_Wave24oz_EastmanTritanPlasticWaterBottle_CoralSands.jpg?v=1724769575&width=1920"
+  }
+];
+
+
+
+
 const express = require('express');
 const path = require('path');
 const helmet = require('helmet');
@@ -48,6 +68,7 @@ app.use('/upload', uploadRoutes);
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
+app.use("/uploads", express.static(path.join(process.cwd(), "src/public/js/uploads")));
 
 // Session configuration
 app.use(
@@ -101,6 +122,10 @@ app.get('/', csrfProtection, (req, res) => {
     title: 'Home',
     csrfToken: req.csrfToken(),
   });
+});
+
+app.get("/api/lost-items", (req, res) => {
+  res.json(lostItems);
 });
 
 

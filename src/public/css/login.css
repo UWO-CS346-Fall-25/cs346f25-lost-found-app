@@ -9,7 +9,9 @@
 body{
   background-color: rgb(246, 247, 249);
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  /*justify-content: center;*/
 }
 
 main{
@@ -54,3 +56,11 @@ form{
 #submit-credentials:hover{
   background-color: rgb(226,226,226);
 }
+
+header {
+  background-color: var(--card); 
+  box-shadow: 0 2px 8px rgba(16, 22, 30, 0.08); 
+  padding: 18px; 
+  display:block;
+}
+

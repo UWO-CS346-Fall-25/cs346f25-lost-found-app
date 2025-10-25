@@ -1,27 +1,33 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <title><%= title %></title>
+  <link rel="stylesheet" href="/css/global.css">
   <link rel="stylesheet" href="/css/upload.css">
 </head>
 <body>
-  <h1>Upload a Lost Item</h1>
+  <!-- Consistent header -->
+  <%- include('partials/header'); %>
 
-  <form action="/upload" method="POST" enctype="multipart/form-data">
-    <div>
-      <label for="photo">Upload Photo:</label>
-      <input type="file" name="photo" id="photo" accept="image/*" required>
-    </div>
+  <main>
+    <h1>Upload a Lost Item</h1>
 
-    <div>
-      <label for="description">Description:</label>
-      <textarea name="description" id="description" rows="3" required></textarea>
-    </div>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+      <div>
+        <label for="photo">Upload Photo:</label>
+        <input type="file" name="photo" id="photo" accept="image/*" required>
+      </div>
 
-    <button type="submit">Submit</button>
-  </form>
+      <div>
+        <label for="description">Description:</label>
+        <textarea name="description" id="description" rows="3" required></textarea>
+      </div>
 
-  <a href="/">Back to Home</a>
+      <button type="submit">Submit</button>
+    </form>
+
+    <a href="/">Back to Home</a>
+  </main>
 </body>
 </html>

@@ -6,18 +6,20 @@
   box-sizing:border-box;
 }
 
-body{
+
+body {
   background-color: rgb(246, 247, 249);
   display: flex;
-  justify-content: center;
+  flex-direction: column; 
+  align-items: center; 
+  min-height: 100vh;
 }
 
-main{
-    background-color: rgb(246, 247, 249);
-    max-width: 60vw;
-    height: 100vh;
-    padding-top: 15vh;
-    margin:auto;
+main {
+  background-color: rgb(246, 247, 249);
+  max-width: 60vw;
+  padding-top: 15vh;
+  margin: 0 auto;
 }
 
 #register-title{
@@ -54,3 +56,4 @@ form{
 #submit-credentials:hover{
   background-color: rgb(226,226,226);
 }
+
