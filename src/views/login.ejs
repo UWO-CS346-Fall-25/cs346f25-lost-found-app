@@ -14,15 +14,25 @@
         <div id="login-title">
             Login
         </div>
+<<<<<<< HEAD
         <form id="credentials">
             <label for="email"></label>
             <input for="email" type="text" placeholder="Email">
+=======
+        <form id="credentials" action="/login" method="POST">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="text" placeholder="Email">
+            <span id="emailError" class="error-message"></span>
+>>>>>>> 091ec84 (making login and register pages look better, adding form validation, getting rid of old homepage)
 
-            <label for="password"></label>
-            <input for="password" type="password" placeholder="Password">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" placeholder="Password">
+            <span id="passwordError" class="error-message"></span>
 
             <button type="submit" id="submit-credentials">Submit</button>
         </form>
+
     </main>
+    <script src="/js/login.js"></script>
 </body>
 </html>

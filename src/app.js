@@ -46,6 +46,7 @@ app.use(
         defaultSrc: ["'self'"],
         styleSrc: ["'self'", "'unsafe-inline'"],
         scriptSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'"],
         imgSrc: ["'self'", 'data:', 'https:'],
       },
     },
@@ -108,31 +109,68 @@ app.get('/login', (req, res) => {
   res.render('login', { title: 'login' });
 });
 
+<<<<<<< HEAD
 app.get('/allResults', (req, res) => {
   res.render('allResults', {
     title: 'All Results',
     lostItems // this passes the array to your EJS
   });
 });
+=======
+// app.get('/allResults', (req, res) => {
+//   res.render('allResults', { 
+//     title: 'All Results', 
+//     lostItems 
+//   });
+// });
+>>>>>>> 091ec84 (making login and register pages look better, adding form validation, getting rid of old homepage)
 
 app.get('/upload', (req, res) => {
   res.render('upload', { title: 'upload' });
 });
 
+<<<<<<< HEAD
 app.get('/upload', (req, res) => {
   res.render('upload', { title: 'upload' });
 });
 
 // Placeholder home route
+=======
+
+>>>>>>> 091ec84 (making login and register pages look better, adding form validation, getting rid of old homepage)
 app.get('/', csrfProtection, (req, res) => {
-  res.render('index', {
-    title: 'Home',
+  res.render('allResults', {
+    title: 'All Results',
     csrfToken: req.csrfToken(),
+    lostItems, 
   });
 });
 
 app.get("/api/lost-items", (req, res) => {
   res.json(lostItems);
+});
+
+app.post("/register", (req, res) => {
+  const { email, password, confirmPassword } = req.body;
+
+  console.log("Form submitted:");
+  console.log("Email:", email);
+  console.log("Password:", password);
+  console.log("Confirm Password:", confirmPassword);
+
+  
+  res.send("Form received successfully!  I think this will eventually redirect you to some sort of account confirmation page");
+});
+
+app.post("/login", (req, res) => {
+  const { email, password} = req.body;
+
+  console.log("Form submitted:");
+  console.log("Email:", email);
+  console.log("Password:", password);
+
+  
+  res.send("Form received successfully! I think this will eventually redirect you to the all results page, but you will now be logged in and be able to claim items.");
 });
 
 
