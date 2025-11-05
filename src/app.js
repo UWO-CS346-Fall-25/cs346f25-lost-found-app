@@ -109,8 +109,8 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/allResults', (req, res) => {
-  res.render('allResults', { 
-    title: 'All Results', 
+  res.render('allResults', {
+    title: 'All Results',
     lostItems // this passes the array to your EJS
   });
 });

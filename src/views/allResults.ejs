@@ -40,10 +40,10 @@
 
         <div class="cards-grid">
           <!-- <article class="item-card">
-            <img class="photo" 
+            <img class="photo"
                  src="https://www.ecovessel.com/cdn/shop/files/EVWAVE24OCS_Wave24oz_EastmanTritanPlasticWaterBottle_CoralSands.jpg?v=1724769575&width=1920"
                  alt="photo of lost item"/>
-            
+
             <div class="card-body">
               <h3 class="item-name">Waterbottle</h3>
               <p class="location-found">Halsey</p>
@@ -55,10 +55,10 @@
           </article>
 
           <article class="item-card">
-            <img class="photo" 
+            <img class="photo"
                  src="https://i.ebayimg.com/images/g/csIAAOSw-ZJeOXW4/s-l1600.webp"
                  alt="photo of lost item"/>
-            
+
             <div class="card-body">
               <h3 class="item-name">Rick Astley T-Shirt + Jorts</h3>
               <p class="location-found">Sage</p>
@@ -68,15 +68,15 @@
               </div>
             </div>
           </article> -->
-          
+
           <!-- Dynamic content -->
           <% if (Array.isArray(lostItems) && lostItems.length) { %>
             <% lostItems.forEach(function(item){ %>
               <article class="item-card">
-                <img class="photo" 
+                <img class="photo"
                      src="<%= item.image %>"
                      alt="photo of <%= item.name %>" />
-                
+
                 <div class="card-body">
                   <h3 class="item-name"><%= item.name %></h3>
                   <p class="location-found"><%= item.location %></p>
@@ -93,7 +93,7 @@
         </div>
       </section>
     </main>
-    
+
     <%- include('partials/footer'); %>
 
     <script src="/js/claimAlert.js"></script>
