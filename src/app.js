@@ -9,6 +9,26 @@
  * - Error handling
  */
 
+const lostItems = [
+  {
+    id: 1,
+    name: "Baby Yoda",
+    location: "Sage",
+    description: "Extraterrestrial being found in sage",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAt2kdcVjQywWpAi27E6aa9IuWp3kofXuFugp8PFZkeclFwP8sJhSCkk2Fn_F1vQtgSDvuuybYr1nFDTtkn-pqUCt4tpBFG99CW_NfMeUL-w"
+  },
+  {
+    id: 2,
+    name: "Waterbottle",
+    location: "Library",
+    description: "Black case near study cubicles",
+    image: "https://www.ecovessel.com/cdn/shop/files/EVWAVE24OCS_Wave24oz_EastmanTritanPlasticWaterBottle_CoralSands.jpg?v=1724769575&width=1920"
+  }
+];
+
+
+
+
 const express = require('express');
 const path = require('path');
 const helmet = require('helmet');
@@ -39,9 +59,16 @@ app.set('views', path.join(__dirname, 'views'));
 // Body parsing middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const uploadRoutes = require('./routes/upload');
+app.use('/upload', uploadRoutes);
+
+
+
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
+app.use("/uploads", express.static(path.join(process.cwd(), "src/public/js/uploads")));
 
 // Session configuration
 app.use(
@@ -82,7 +109,14 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/allResults', (req, res) => {
-  res.render('allResults', { title: 'All Results' });
+  res.render('allResults', {
+    title: 'All Results',
+    lostItems // this passes the array to your EJS
+  });
+});
+
+app.get('/upload', (req, res) => {
+  res.render('upload', { title: 'upload' });
 });
 
 // Placeholder home route
@@ -91,6 +125,10 @@ app.get('/', csrfProtection, (req, res) => {
     title: 'Home',
     csrfToken: req.csrfToken(),
   });
+});
+
+app.get("/api/lost-items", (req, res) => {
+  res.json(lostItems);
 });
 
 

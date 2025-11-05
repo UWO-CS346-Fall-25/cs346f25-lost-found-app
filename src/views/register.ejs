@@ -4,11 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title><%= title %></title>
+  <link rel="stylesheet" href="/css/global.css" />
   <link rel="stylesheet" href="/css/register.css" />
 </head>
 <body>
+    <%- include('partials/header'); %>
     <main>
-        
+
         <div id="register-title">
             Welcome!
         </div>
@@ -16,7 +18,7 @@
         <form id="credentials">
             <label for="email"></label>
             <input for="email" type="text" placeholder="Email">
-            
+
 
             <label for="password"></label>
             <input for="password" type="password" placeholder="Password">
