@@ -15,19 +15,32 @@
             Welcome!
         </div>
         <!-- <div id="register-subtext">Create an account by entering your email and desired password.</div> -->
-        <form id="credentials">
+        <form id="credentials" action="/register" method="POST">
             <label for="email"></label>
-            <input for="email" type="text" placeholder="Email">
+            <input id="emailBox" for="email" type="text" placeholder="Email" name="email">
+            <span id="emailError" class="error-message"></span>
 
 
             <label for="password"></label>
-            <input for="password" type="password" placeholder="Password">
+            <input id="firstPassword" for="password" type="password" placeholder="Password" name="password">
+            <div id="passwordRequirements" class="requirements">
+            <p>Your password must include:</p>
+            <ul>
+                <li>At least 8 characters</li>
+                <li>At least one uppercase letter (A–Z)</li>
+                <li>At least one lowercase letter (a–z)</li>
+                <li>At least one number (0–9)</li>
+                <li>At least one special character (!@#$...)</li>
+            </ul>
+            </div>
 
             <label for="password"></label>
-            <input for="password" type="password" placeholder="Confirm Password">
+            <input id="secondPassword" for="password" type="password" placeholder="Confirm Password" name="confirmPassword">
+            <span id="passwordError" class="error-message"></span>
 
             <button type="submit" id="submit-credentials">Submit</button>
         </form>
     </main>
+    <script src="/js/register.js"></script>
 </body>
 </html>
