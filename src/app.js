@@ -1,3 +1,5 @@
+
+
 /**
  * Express Application Configuration
  *
@@ -8,25 +10,6 @@
  * - Routes
  * - Error handling
  */
-
-const lostItems = [
-  {
-    id: 1,
-    name: "Baby Yoda",
-    location: "Sage",
-    description: "Extraterrestrial being found in sage",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAt2kdcVjQywWpAi27E6aa9IuWp3kofXuFugp8PFZkeclFwP8sJhSCkk2Fn_F1vQtgSDvuuybYr1nFDTtkn-pqUCt4tpBFG99CW_NfMeUL-w"
-  },
-  {
-    id: 2,
-    name: "Waterbottle",
-    location: "Library",
-    description: "Black case near study cubicles",
-    image: "https://www.ecovessel.com/cdn/shop/files/EVWAVE24OCS_Wave24oz_EastmanTritanPlasticWaterBottle_CoralSands.jpg?v=1724769575&width=1920"
-  }
-];
-
-
 
 
 const express = require('express');
@@ -60,11 +43,6 @@ app.set('views', path.join(__dirname, 'views'));
 // Body parsing middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-const uploadRoutes = require('./routes/upload');
-app.use('/upload', uploadRoutes);
-
-
-
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
@@ -101,6 +79,12 @@ app.use((req, res, next) => {
 // const indexRouter = require('./routes/index');
 // app.use('/', indexRouter);
 
+const indexRoutes = require('./routes/index');
+app.use('/', indexRoutes);
+
+const uploadRoutes = require('./routes/upload');
+app.use('/upload', uploadRoutes);
+
 app.get('/register', (req, res) => {
   res.render('register', { title: 'register' });
 });
@@ -109,28 +93,9 @@ app.get('/login', (req, res) => {
   res.render('login', { title: 'login' });
 });
 
-// app.get('/allResults', (req, res) => {
-//   res.render('allResults', { 
-//     title: 'All Results', 
-//     lostItems 
-//   });
-// });
 
 app.get('/upload', (req, res) => {
   res.render('upload', { title: 'upload' });
-});
-
-
-app.get('/', csrfProtection, (req, res) => {
-  res.render('allResults', {
-    title: 'All Results',
-    csrfToken: req.csrfToken(),
-    lostItems, 
-  });
-});
-
-app.get("/api/lost-items", (req, res) => {
-  res.json(lostItems);
 });
 
 app.post("/register", (req, res) => {
