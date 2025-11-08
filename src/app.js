@@ -43,6 +43,11 @@ app.set('views', path.join(__dirname, 'views'));
 // Body parsing middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const uploadRoutes = require('./routes/upload');
+app.use('/upload', uploadRoutes);
+
+
+
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
