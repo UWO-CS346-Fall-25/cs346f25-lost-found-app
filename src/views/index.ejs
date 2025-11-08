@@ -7,30 +7,7 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <header>
-    <nav>
-      <div class="container">
-        <a href="/" class="logo">CS346 Project</a>
-        <ul class="nav-links">
-          <li><a href="/">Home</a></li>
-          <li><a href="/about">About</a></li>
-          <% if (user) { %>
-            <li><a href="/profile">Profile</a></li>
-            <li>
-              <form action="/users/logout" method="POST" style="display: inline;">
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <button type="submit" class="btn-link">Logout</button>
-              </form>
-            </li>
-          <% } else { %>
-            <li><a href="/users/login">Login</a></li>
-            <li><a href="/users/register">Register</a></li>
-          <% } %>
-        </ul>
-      </div>
-    </nav>
-  </header>
-
+  <%- include('partials/header'); %>
   <main class="container">
     <section class="hero">
       <h1>Welcome to CS346 Project Template</h1>

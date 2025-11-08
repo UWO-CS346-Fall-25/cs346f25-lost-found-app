@@ -1,0 +1,102 @@
+:root{
+  --bg:#f6f7f9;
+  --card:#ffffff;
+  --muted:#68707a;
+  --primary:#2b7cff;
+  font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+}
+
+body{
+  background-color:var(--bg);
+  color:var(--muted);
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+}
+
+/* header{
+  background-color:var(--card);
+  box-shadow:0 2px 8px rgba(16,22,30,0.08);
+  padding:18px;
+  display:block;
+  width:100%;
+  z-index:10;
+} */
+
+main{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:4rem 1rem;
+  flex:1;
+}
+
+h1{
+  color:var(--primary);
+  margin-bottom:1.5rem;
+  text-align:center;
+}
+
+form{
+  background-color:var(--card);
+  padding:2rem;
+  border-radius:8px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.05);
+  width:100%;
+  max-width:500px;
+  display:flex;
+  flex-direction:column;
+}
+
+form div{
+  margin-bottom:1.2rem;
+}
+
+label{
+  display:block;
+  margin-bottom:0.5rem;
+  font-weight:600;
+  color:var(--muted);
+}
+
+input[type="file"],
+textarea{
+  width:100%;
+  padding:0.75rem;
+  border:1px solid #d0d4da;
+  border-radius:6px;
+  background-color:#fff;
+  font-size:1rem;
+  color:#333;
+}
+
+textarea{
+  resize:vertical;
+}
+
+button[type="submit"]{
+  background-color:var(--primary);
+  color:#fff;
+  border:none;
+  padding:0.75rem 1.5rem;
+  border-radius:6px;
+  font-size:1rem;
+  cursor:pointer;
+  transition:background-color 0.3s ease;
+}
+
+button[type="submit"]:hover{
+  background-color:#ff6b6b;
+}
+
+a{
+  margin-top:1.5rem;
+  color:var(--primary);
+  text-decoration:none;
+  font-weight:500;
+  text-align:center;
+}
+
+a:hover{
+  text-decoration:underline;
+}

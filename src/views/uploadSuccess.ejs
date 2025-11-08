@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Upload Successful</title>
+  <link rel="stylesheet" href="/css/uploadSuccess.css" />
+</head>
+<body>
+  <%- include('partials/header'); %>
+  <main class="container">
+    <section class="success-card">
+      <div class="success-icon">✅</div>
+      <h1>Item Uploaded Successfully!</h1>
+      <p class="message">Your lost item has been added to the system. Thank you for helping others find their belongings.</p>
+      <div class="actions">
+        <a href="/upload" class="btn outline">Upload Another</a>
+        <a href="/allResults" class="btn primary">View All Items</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div>Lost and Found app</div>
+    </div>
+  </footer>
+</body>
+</html>
