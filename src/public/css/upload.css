@@ -100,3 +100,67 @@ a{
 a:hover{
   text-decoration:underline;
 }
+
+/* --- Building selection radio buttons --- */
+fieldset {
+  border: none;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+legend {
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+  text-align: left;
+  width: 100%;
+}
+
+fieldset label {
+  background-color: #f0f3f7;
+  color: var(--muted);
+  border: 1px solid #d0d4da;
+  border-radius: 6px;
+  padding: 0.6rem 1rem;
+  flex: 1;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+fieldset input[type="radio"] {
+  display: none;
+}
+
+fieldset input[type="radio"]:checked + span,
+fieldset label:has(input[type="radio"]:checked) {
+  background-color: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(43, 124, 255, 0.2);
+}
+
+fieldset label:hover {
+  background-color: #e8f0ff;
+  border-color: var(--primary);
+}
+
+#item_name {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d0d4da;
+  border-radius: 6px;
+  background-color: #fff;
+  font-size: 1rem;
+  color: #333;
+  transition: border-color 0.2s ease;
+}
+
+#item_name:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(43, 124, 255, 0.15);
+}

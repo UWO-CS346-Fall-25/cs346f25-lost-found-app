@@ -25,6 +25,5 @@ const allItemsController = require('../controllers/allItemsController');
 // router.get('/', indexController.getHome);
 router.get('/', allItemsController.showAllUploads);
 
-// dummy comment
 
 module.exports = router;

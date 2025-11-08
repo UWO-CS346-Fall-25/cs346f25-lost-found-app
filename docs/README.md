@@ -1,5 +1,11 @@
 # CS346 Project Template Documentation
 
+## Week 9 Improvements
+- Updated Login and Register page to look like modern professional pages.  
+- Added form validation to both login and register
+- Removed the default home page and made allResult the new homepage
+- Hover effects on the submission buttons on Upload, Register, and Login
+
 ## Overview
 
 This is a teaching template for building web applications with:
@@ -25,21 +31,67 @@ This is a teaching template for building web applications with:
 │   ├── app.js              # Express app configuration
 │   ├── routes/             # Route definitions
 │   │   ├── index.js        # Main routes
+│   │   ├── upload.js       # Upload routes
 │   │   └── users.js        # User routes
 │   ├── controllers/        # Request handlers
+│   │   ├── allItemsController.js
 │   │   ├── indexController.js
+│   │   ├── uploadController.js
 │   │   └── userController.js
 │   ├── models/             # Database models
 │   │   ├── db.js           # Database connection
 │   │   └── User.js         # User model
 │   ├── views/              # EJS templates
-│   │   ├── index.ejs       # Home page
+│   │   ├── allResults.ejs  # Results list
 │   │   ├── error.ejs       # Error page
-│   │   └── layout.ejs      # Layout template (optional)
+│   │   ├── index.ejs       # Home page
+│   │   ├── layout.ejs      # Layout template
+│   │   ├── login.ejs       # Login page
+│   │   ├── register.ejs    # Registration page
+│   │   ├── upload.ejs      # Upload page
+│   │   └── uploadSuccess.ejs # Upload success page
+│   │   └── partials/       # View partials
+│   │       ├── footer.ejs
+│   │       └── header.ejs
 │   └── public/             # Static files
 │       ├── css/
-│       │   └── style.css   # Stylesheet
-│       └── js/
+│       │   ├── allResults.css
+│       │   ├── global.css
+│       │   ├── login.css
+│       │   ├── register.css
+│       │   ├── style.css
+│       │   ├── upload.css
+│       │   └── uploadSuccess.css
+│       ├── js/
+│       │   ├── claimAlert.js
+│       │   └── main.js
+|       |   |-- login.js
+|       |   |-- register.js
+│       └── uploads/        # Uploaded files (hash-named)
+│           ├── 10e19f6f2423107a36a80c659356dfd3
+│           ├── 4ff96a80c12cac498aeb3635da38205d
+│           └── c6d80bc50d380d061c7f4a4a81d5d946
+├── routes/                 # Top-level routes directory (alias)
+│   ├── index.js
+│   ├── upload.js
+│   └── users.js
+├── db/
+│   ├── migrate.js          # Migration runner
+│   ├── seed.js             # Seed runner
+│   ├── reset.js            # Database reset script
+│   ├── migrations/         # Database migrations
+│   │   └── 001_create_users_table.sql
++│   └── seeds/              # Database seeds
+│       └── 001_seed_users.sql
+├── docs/                   # Documentation
+│   ├── README.md           # This file
+│   ├── SETUP.md            # Setup instructions
+│   └── ARCHITECTURE.md     # Architecture overview
+├── .env.example            # Environment variables template
+├── eslint.config.js        # ESLint configuration
+├── package.json            # Project dependencies and scripts
+└── README.md               # Project README
+```
 │           └── main.js     # Client-side JavaScript
 ├── db/
 │   ├── migrate.js          # Migration runner

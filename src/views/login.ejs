@@ -10,13 +10,14 @@
 <body>
     <%- include('partials/header'); %>
     <main>
-
+        
         <div id="login-title">
             Login
         </div>
-        <form id="credentials">
-            <label for="email"></label>
-            <input for="email" type="text" placeholder="Email">
+        <form id="credentials" action="/login" method="POST">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="text" placeholder="Email">
+            <span id="emailError" class="error-message"></span>
 
             <label for="password">Password</label>
             <input id="password" name="password" type="password" placeholder="Password">

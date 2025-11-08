@@ -2,6 +2,12 @@
 
 A teaching template for building secure web applications with Node.js, Express, EJS, and PostgreSQL.
 
+## Week 9 Improvements
+- Updated Login and Register page to look like modern professional pages.  
+- Added form validation to both login and register
+- Removed the default home page and made allResult the new homepage
+- Hover effects on the submission buttons on Upload, Register, and Login
+
 ## Features
 
 - 🚀 **Node.js 20** + **Express 4** - Modern JavaScript backend
