@@ -15,6 +15,11 @@
 
     <form action="/upload" method="POST" enctype="multipart/form-data">
       <div>
+        <label for="item_name">Item Name:</label>
+        <input type="text" name="item_name" id="item_name" placeholder="e.g. Blue Backpack" required>
+      </div>
+
+      <div>
         <label for="photo">Upload Photo:</label>
         <input type="file" name="photo" id="photo" accept="image/*" required>
       </div>
@@ -23,6 +28,25 @@
         <label for="description">Description:</label>
         <textarea name="description" id="description" rows="3" required></textarea>
       </div>
+
+      <fieldset>
+        <legend>Building Found:</legend>
+
+        <label>
+          <input type="radio" name="building" value="Polk" required>
+          Polk
+        </label>
+
+        <label>
+          <input type="radio" name="building" value="Sage">
+          Sage
+        </label>
+
+        <label>
+          <input type="radio" name="building" value="Halsey">
+          Halsey
+        </label>
+      </fieldset>
 
       <button type="submit">Submit</button>
     </form>
