@@ -1,3 +1,7 @@
+const { supabaseAdmin } = require("./models/supabaseAdmin.js");
+const { supabase } = require("./models/supabaseClient.js");
+const { showAllUploads } = require("./controllers/allItemsController");
+
 
 
 /**
@@ -49,6 +53,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(process.cwd(), "src/public/js/uploads")));
 
+
+const cookieParser = require("cookie-parser");
+
+app.use(cookieParser());
+
 // Session configuration
 app.use(
   session({
@@ -79,11 +88,22 @@ app.use((req, res, next) => {
 // const indexRouter = require('./routes/index');
 // app.use('/', indexRouter);
 
+function requireAuth(req, res, next) {
+  if (!req.session.user) {
+    return res.redirect("/login");
+  }
+  next();
+}
+
+app.get("/", requireAuth, showAllUploads);
+
 const indexRoutes = require('./routes/index');
 app.use('/', indexRoutes);
 
 const uploadRoutes = require('./routes/upload');
 app.use('/upload', uploadRoutes);
+
+
 
 app.get('/register', (req, res) => {
   res.render('register', { title: 'register' });
@@ -98,28 +118,68 @@ app.get('/upload', (req, res) => {
   res.render('upload', { title: 'upload' });
 });
 
-app.post("/register", (req, res) => {
+app.get("/logout", (req, res) => {
+  req.session.destroy(() => {
+    res.redirect("/login");
+  });
+});
+
+
+app.post("/register", async (req, res) => {
   const { email, password, confirmPassword } = req.body;
 
-  console.log("Form submitted:");
-  console.log("Email:", email);
-  console.log("Password:", password);
-  console.log("Confirm Password:", confirmPassword);
+  if (!email || !password || !confirmPassword)
+    return res.status(400).send("Missing fields.");
 
-  
-  res.send("Form received successfully!  I think this will eventually redirect you to some sort of account confirmation page");
+  if (password !== confirmPassword)
+    return res.status(400).send("Passwords do not match.");
+
+  const { data, error } = await supabaseAdmin.auth.admin.createUser({
+    email,
+    password,
+    email_confirm: true
+  });
+
+  if (error) {
+    console.error(error);
+    return res.status(400).send(`Error: ${error.message}`);
+  }
+
+  return res.redirect("/login?registered=1");
 });
 
-app.post("/login", (req, res) => {
-  const { email, password} = req.body;
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
 
-  console.log("Form submitted:");
-  console.log("Email:", email);
-  console.log("Password:", password);
+  // Basic validation
+  if (!email || !password) {
+    return res.status(400).send("Missing email or password.");
+  }
 
-  
-  res.send("Form received successfully! I think this will eventually redirect you to the all results page, but you will now be logged in and be able to claim items.");
+  // Authenticate with Supabase
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) {
+    console.error("Login failed:", error.message);
+    return res.status(401).render("login", {
+      title: "login",
+      error: "Invalid email or password.",
+    });
+  }
+
+  // Store user info in the Express session
+  req.session.user = {
+    id: data.user.id,
+    email: data.user.email,
+  };
+
+  // Redirect to a protected page
+  return res.redirect("/");
 });
+
 
 
 
