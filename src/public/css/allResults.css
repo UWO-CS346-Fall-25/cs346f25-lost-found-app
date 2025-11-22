@@ -132,3 +132,41 @@ body{
   display:flex;
   gap:8px;
 }
+
+/* Building Hours Styling */
+
+.hours-container {
+  background: #f8f8f8;
+  padding: 8px 12px;
+  margin-top: 10px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  border-left: 4px solid #4a7cff;
+}
+
+.hours-title {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #2c3e50;
+}
+
+.hours-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.hours-list li {
+  margin: 2px 0;
+  color: #343434;
+  font-size: 0.85rem;
+  line-height: 1.2rem;
+}
+
+/* When no hours available */
+.hours-none {
+  color: #666;
+  font-style: italic;
+  margin-top: 10px;
+}

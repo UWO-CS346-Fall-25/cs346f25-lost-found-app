@@ -74,18 +74,35 @@
             <% lostItems.forEach(function(item){ %>
               <article class="item-card">
                 <img class="photo" 
-                     src="<%= item.image %>"
-                     alt="photo of <%= item.name %>" />
+                    src="<%= item.image %>"
+                    alt="photo of <%= item.name %>" />
                 
                 <div class="card-body">
                   <h3 class="item-name"><%= item.name %></h3>
                   <p class="location-found"><%= item.location %></p>
+
+                  <% if (item.hours) { %>
+                    <div class="hours-container">
+                      <strong class="hours-title">Building Hours</strong>
+                      <ul class="hours-list">
+                        <% item.hours.forEach(line => { %>
+                          <li><%= line %></li>
+                        <% }) %>
+                      </ul>
+                    </div>
+                  <% } else { %>
+                    <p class="hours-none"><em>No hours available</em></p>
+                  <% } %>
+
+
                   <p class="desc"><%= item.description %></p>
+
                   <div class="card-actions">
                     <a class="btn outline" href="#">Claim</a>
                   </div>
                 </div>
               </article>
+
             <% }); %>
           <% } else { %>
             <p>No items found.</p>

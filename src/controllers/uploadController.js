@@ -1,20 +1,5 @@
-// export function showUploadForm(req, res) {
-//   res.render('upload', { title: 'Upload Lost Item' });
-// }
+import { supabaseAdmin } from '../models/supabaseAdmin.js';
 
-// export function handleUpload(req, res) {
-//   const { description } = req.body;
-//   const photoPath = req.file ? `/uploads/${req.file.filename}` : null;
-
-//   console.log('Uploaded file:', req.file);
-//   console.log('Description:', description);
-
-//   res.render('uploadSuccess', { title: 'Upload Complete', description, photoPath });
-// }
-
-
-// src/controllers/uploadController.js
-import { supabase } from '../models/supabaseClient.js';
 import fs from 'fs';
 import path from 'path';
 
@@ -32,16 +17,14 @@ export async function handleUpload(req, res) {
     }
 
     // Generate unique file name
-    // 🧼 Sanitize file name (remove spaces and unsafe characters) AI Generated
     const baseName = path.parse(file.originalname).name;
-    const safeName = baseName.replace(/[^a-zA-Z0-9_-]/g, '_'); // letters, numbers, underscores, dashes only
+    const safeName = baseName.replace(/[^a-zA-Z0-9_-]/g, '_');
     const fileExt = path.extname(file.originalname).toLowerCase();
     const fileName = `${Date.now()}_${safeName}${fileExt}`;
 
 
-    // Upload file to Supabase Storage (bucket: "lost-items")
-    const { data: uploadData, error: uploadError } = await supabase.storage
-      .from('lost-items')
+    const { data: uploadData, error: uploadError } = await supabaseAdmin.storage
+      .from('lost-items')               
       .upload(`photos/${fileName}`, fs.createReadStream(file.path), {
         cacheControl: '3600',
         upsert: false,
@@ -53,20 +36,19 @@ export async function handleUpload(req, res) {
       return res.status(500).send('Failed to upload image to Supabase.');
     }
 
-    // Get public URL for the uploaded image
-    const { data: publicUrlData } = supabase.storage
+    const { data: publicUrlData } = supabaseAdmin.storage
       .from('lost-items')
       .getPublicUrl(`photos/${fileName}`);
 
     const photoUrl = publicUrlData.publicUrl;
 
-    const { item_name } = req.body; // <-- get the user input
+    const { item_name } = req.body;
 
-    const { data: insertData, error: insertError } = await supabase
+    const { data: insertData, error: insertError } = await supabaseAdmin
       .from('Items')
       .insert([
         {
-          item_name, // use the name entered in the form
+          item_name,
           item_description: description,
           building_found: building,
           photo_url: photoUrl,
@@ -81,12 +63,12 @@ export async function handleUpload(req, res) {
 
     console.log('Inserted item:', insertData);
 
-    // Render success page
     res.render('uploadSuccess', {
       title: 'Upload Complete',
       description,
       photoPath: photoUrl,
     });
+
   } catch (err) {
     console.error('Unexpected error:', err);
     res.status(500).send('Server error while uploading item.');
