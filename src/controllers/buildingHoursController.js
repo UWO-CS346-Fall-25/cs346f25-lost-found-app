@@ -11,7 +11,6 @@ const buildingNameMap = {
 };
 
 async function getBuildingHours(buildingName) {
-  console.log("Starting call to Google Places API, buildingHoursController, Timestamp: ", Date.now());
   try {
     const apiKey = process.env.GOOGLE_PLACES_API_KEY;
     const queryName = buildingNameMap[buildingName] || buildingName;
@@ -60,7 +59,7 @@ async function getBuildingHours(buildingName) {
       const idx = (startIndex + i) % allDays.length;
       nextThree.push(allDays[idx]);
     }
-    
+
     return {
       hours: nextThree,
       status: "OK"
@@ -68,7 +67,7 @@ async function getBuildingHours(buildingName) {
 
 
   } catch (err) {
-    console.error("Issue while calling Google API, buildingHoursController error: ", err, " TimeStamp: ", Date.now());
+    console.error("Google Places error:", err);
     return { hours: null, status: "API error" };
   }
 }

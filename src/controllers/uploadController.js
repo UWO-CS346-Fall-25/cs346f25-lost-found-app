@@ -8,13 +8,11 @@ export function showUploadForm(req, res) {
 }
 
 export async function handleUpload(req, res) {
-  console.log("Starting item upload... Timestamp: ", Date.now());
   try {
     const { description, building } = req.body;
     const file = req.file;
 
     if (!file) {
-      console.log("No item found to upload");
       return res.status(400).send('No file uploaded.');
     }
 
@@ -34,7 +32,7 @@ export async function handleUpload(req, res) {
       });
 
     if (uploadError) {
-      console.error('Upload error in uploadController:', uploadError, " Timestamp:", Date.now());
+      console.error('Upload error:', uploadError);
       return res.status(500).send('Failed to upload image to Supabase.');
     }
 
@@ -59,7 +57,7 @@ export async function handleUpload(req, res) {
       .select();
 
     if (insertError) {
-      console.error('Insert error in uploadController:', insertError, " Timestamp: ", Date.now());
+      console.error('Insert error:', insertError);
       return res.status(500).send('Failed to save item to Supabase.');
     }
 
@@ -72,7 +70,7 @@ export async function handleUpload(req, res) {
     });
 
   } catch (err) {
-    console.error('Unexpected error in uploadController: ', err, " Timestamp: ", Date.now());
+    console.error('Unexpected error:', err);
     res.status(500).send('Server error while uploading item.');
   }
 }
