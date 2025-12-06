@@ -1,7 +1,5 @@
-// src/models/supabaseClient.js
-//This client is used for grabbing the items from the DB.
-import { createClient } from '@supabase/supabase-js';
-import dotenv from 'dotenv';
+const { createClient } = require('@supabase/supabase-js');
+const dotenv = require('dotenv');
 
 dotenv.config();
 
@@ -13,4 +11,6 @@ if (!supabaseUrl || !supabaseKey) {
   process.exit(1);
 }
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+module.exports = { supabase };
