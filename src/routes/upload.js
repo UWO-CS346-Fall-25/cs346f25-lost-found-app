@@ -5,6 +5,7 @@ const { showUploadForm, handleUpload } = require('../controllers/uploadControlle
 const router = express.Router();
 const upload = multer({ dest: 'public/uploads/' });
 
+//display upload form
 router.get('/', showUploadForm);
 router.post('/', upload.single('photo'), handleUpload);
 

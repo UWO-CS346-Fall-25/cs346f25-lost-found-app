@@ -10,6 +10,11 @@ const buildingNameMap = {
   Rec: "Student Recreation and Wellness Center"
 };
 
+/**
+ * Grabs the hours for the next three days of the building that is inputted
+ * @param {*} buildingName - Name of building you wish to receive the hours for
+ * @returns - Hours that the building is open for the next three days.
+ */
 async function getBuildingHours(buildingName) {
   console.log("Starting call to Google Places API, buildingHoursController, Timestamp: ", Date.now());
   try {
@@ -54,7 +59,7 @@ async function getBuildingHours(buildingName) {
 
     if (startIndex === -1) startIndex = 0;
 
-
+    //Limits results to only the next three days.  Looks better in UI to display only 3 values rather than 7.
     const nextThree = [];
     for (let i = 0; i < 3 && i < allDays.length; i++) {
       const idx = (startIndex + i) % allDays.length;

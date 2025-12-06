@@ -62,23 +62,6 @@ exports.getLogin = (req, res) => {
  */
 exports.postLogin = async (req, res, next) => {
   try {
-    // const { email, password } = req.body;
-
-    // Find user by email
-    // const user = await User.findByEmail(email);
-
-    // Verify password
-    // if (!user || !await verifyPassword(password, user.password)) {
-    //   return res.render('users/login', {
-    //     title: 'Login',
-    //     error: 'Invalid credentials',
-    //     csrfToken: req.csrfToken(),
-    //   });
-    // }
-
-    // Set session
-    // req.session.user = { id: user.id, username: user.username };
-
     // Redirect to home or dashboard
     res.redirect('/');
   } catch (error) {

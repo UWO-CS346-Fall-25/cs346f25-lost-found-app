@@ -1,8 +1,8 @@
 // src/models/supabaseClient.js
+//This client is used for grabbing the items from the DB.
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
 
-// Load environment variables
 dotenv.config();
 
 const supabaseUrl = process.env.SUPABASE_URL;

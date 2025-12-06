@@ -47,5 +47,3 @@ exports.getAbout = async (req, res, next) => {
     next(error);
   }
 };
-
-// Add more controller methods as needed

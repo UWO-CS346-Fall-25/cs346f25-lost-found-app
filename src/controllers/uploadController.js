@@ -3,10 +3,20 @@ import { supabaseAdmin } from '../models/supabaseAdmin.js';
 import fs from 'fs';
 import path from 'path';
 
+/**
+ * Renders the upload form
+ * @param {*} req - Express request object
+ * @param {*} res - Express Response object
+ */
 export function showUploadForm(req, res) {
   res.render('upload', { title: 'Upload Lost Item' });
 }
 
+/**
+ * Takes the user inputted feilds and puts them into supabase
+ * @param {*} req - Express Request object
+ * @param {*} res - Express Response object
+ */
 export async function handleUpload(req, res) {
   console.log("Starting item upload... Timestamp: ", Date.now());
   try {
