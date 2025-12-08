@@ -1,148 +1,170 @@
-# CS346 Project Template Documentation
+# CS346 Semester Project Template
 
-## Overview
+A teaching template for building secure web applications with Node.js, Express, EJS, and PostgreSQL.
 
-This is a teaching template for building web applications with:
-- **Node.js 20**: JavaScript runtime
-- **Express 4**: Web application framework
-- **EJS**: Templating engine
-- **PostgreSQL**: Relational database
-- **Vanilla JavaScript**: Client-side scripting (no frameworks)
+## Features
 
-## Security Features
+- 🚀 **Node.js 20** + **Express 4** - Modern JavaScript backend
+- 🎨 **EJS** - Server-side templating
+- 🗄️ **PostgreSQL** - Reliable relational database
+- 🔒 **Security First** - Helmet, CSRF protection, secure sessions
+- 📝 **Clean Code** - ESLint, Prettier, best practices
+- 🎓 **Educational** - Well-documented, instructional code
 
-- **Helmet**: Sets security-related HTTP headers
-- **express-session**: Secure session management
-- **CSRF Protection**: Cross-Site Request Forgery protection
-- **Parameterized SQL Queries**: SQL injection prevention
+## Quick Start
 
-## Project Structure
+1. **Clone the repository**
+   ```bash
+   git clone <your-repository-url>
+   cd cs346-semester-project-template
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your database credentials
+   ```
+
+4. **Start the application**
+   ```bash
+   npm start
+   ```
+
+5. **Open your browser**
+   ```
+   http://localhost:3000
+   ```
+
+## Project Structure (detailed)
 
 ```
 .
 ├── src/
-│   ├── server.js           # Server entry point
-│   ├── app.js              # Express app configuration
-│   ├── routes/             # Route definitions
-│   │   ├── index.js        # Main routes
-│   │   └── users.js        # User routes
-│   ├── controllers/        # Request handlers
-│   │   ├── indexController.js
-│   │   └── userController.js
-│   ├── models/             # Database models
-│   │   ├── db.js           # Database connection
-│   │   └── User.js         # User model
-│   ├── views/              # EJS templates
-│   │   ├── index.ejs       # Home page
-│   │   ├── error.ejs       # Error page
-│   │   └── layout.ejs      # Layout template (optional)
-│   └── public/             # Static files
-│       ├── css/
-│       │   └── style.css   # Stylesheet
-│       └── js/
-│           └── main.js     # Client-side JavaScript
+│   ├── server.js                     # Server entry point (starts app)
+│   ├── app.js                        # Express app, routes & middleware
+│   ├── routes/
+│   │   ├── index.js                  # index, register, login routes
+│   │   ├── upload.js                 # upload endpoints and file handling
+│   │   ├── users.js                  # user-related routes (profile, claims)
+│   │   └── buildingHours.js          # API route for building hours proxy
+│   ├── controllers/
+│   │   ├── indexController.js        # homepage / search helpers
+│   │   ├── allItemsController.js     # list & query uploads
+│   │   ├── uploadController.js       # upload handling
+│   │   ├── userController.js         # user-related actions
+│   │   └── buildingHoursController.js# fetch building hours
+│   ├── models/
+│   │   ├── db.js                     # PostgreSQL pool & query helper
+│   │   ├── supabaseClient.js         # public supabase client (anon)
+│   │   ├── supabaseAdmin.js          # admin/service-role client
+│   │   └── User.js                   # (optional) user model utils
+│   ├── views/
+│   │   ├── partials/
+│   │   │   ├── header.ejs
+│   │   │   └── footer.ejs
+│   │   ├── layout.ejs
+│   │   ├── allResults.ejs
+│   │   ├── upload.ejs
+│   │   ├── uploadSuccess.ejs
+│   │   ├── register.ejs
+│   │   ├── login.ejs
+│   │   └── error.ejs
+│   └── public/
+│       ├── css/                      # project stylesheets
+│       │   ├── allResults.css
+│       │   ├── global.css
+│       │   ├── login.css
+│       │   ├── register.css
+│       │   ├── style.css
+│       │   ├── upload.css
+│       │   └── uploadSuccess.css
+│       ├── js/                       # client-side scripts
+│       │   ├── claimAlert.js
+│       │   ├── login.js
+│       │   ├── main.js
+│       │   └── register.js
+│       └── uploads/                  # user-uploaded files (gitignored)
+│           ├── <hash>                # many uploaded file entries
+│           └── ...
 ├── db/
-│   ├── migrate.js          # Migration runner
-│   ├── seed.js             # Seed runner
-│   ├── reset.js            # Database reset script
-│   ├── migrations/         # Database migrations
+│   ├── migrate.js                    # runs SQL migrations
+│   ├── seed.js                       # runs SQL seeds
+│   ├── reset.js                      # reset DB (used with caution)
+│   ├── migrations/
 │   │   └── 001_create_users_table.sql
-│   └── seeds/              # Database seeds
+│   └── seeds/
 │       └── 001_seed_users.sql
-├── docs/                   # Documentation
-│   ├── README.md           # This file
-│   ├── SETUP.md            # Setup instructions
-│   └── ARCHITECTURE.md     # Architecture overview
-├── .env.example            # Environment variables template
-├── .eslintrc.json          # ESLint configuration
-├── .prettierrc.json        # Prettier configuration
-├── .gitignore              # Git ignore rules
-├── package.json            # Project dependencies and scripts
-└── README.md               # Project README
+├── docs/
+│   ├── README.md                     # documentation (this file)
+│   ├── SETUP.md                      # setup & environment notes
+│   └── ARCHITECTURE.md               # high-level architecture
+├── public/                           # public assets used in builds / demo
+│   └── uploads/                      # demo uploads (kept for examples)
+├── .env.example
+├── CONTRIBUTING.md
+├── eslint.config.js
+├── package.json
+├── QUICKSTART.md
+├── README.md                         # project README (root)
+└── other project files (LICENSE, docs, config)
+
 ```
 
-## Getting Started
+## Available Scripts
 
-See [SETUP.md](./SETUP.md) for detailed setup instructions.
+- `npm start` - Start production server
+- `npm run dev` - Start development server with auto-reload
+- `npm run reset` - Reset database (WARNING: deletes all data!)
+- `npm run lint` - Check code for linting errors
+- `npm run lint:fix` - Fix linting errors automatically
+- `npm run format` - Format code with Prettier
 
-## Architecture
+## Security Features
 
-See [ARCHITECTURE.md](./ARCHITECTURE.md) for detailed architecture information.
+- **Helmet**: Sets security-related HTTP headers
+- **express-session**: Secure session management with httpOnly cookies
+- **csurf**: Cross-Site Request Forgery (CSRF) protection
+- **Parameterized SQL**: SQL injection prevention with prepared statements
+- **Environment Variables**: Sensitive data kept out of source code
 
-## Development
+## Documentation
 
-### Available Scripts
+Comprehensive documentation is available in the `docs/` folder:
 
-- `npm start`: Start the production server
-- `npm run dev`: Start the development server with auto-reload
-- `npm run migrate`: Run database migrations
-- `npm run seed`: Seed the database with sample data
-- `npm run reset`: Reset the database (drop all tables and re-run migrations and seeds)
-- `npm run lint`: Check code for linting errors
-- `npm run lint:fix`: Fix linting errors automatically
-- `npm run format`: Format code with Prettier
+- [docs/README.md](docs/README.md) - Documentation overview
+- [docs/SETUP.md](docs/SETUP.md) - Detailed setup instructions
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) - Architecture and design patterns
 
-### Code Style
+## Technology Stack
 
-This project uses:
-- **ESLint** for JavaScript linting
-- **Prettier** for code formatting
+- **Runtime**: Node.js 20
+- **Framework**: Express 4
+- **Templating**: EJS
+- **Database**: PostgreSQL (with pg driver)
+- **Security**: Helmet, express-session, csurf
+- **Development**: ESLint, Prettier, Nodemon
 
-Run `npm run lint` to check for issues and `npm run format` to format your code.
-
-## Security Best Practices
-
-1. **Environment Variables**: Never commit `.env` file. Use `.env.example` as a template.
-2. **Password Hashing**: Always hash passwords using bcrypt before storing.
-3. **Input Validation**: Validate and sanitize all user input.
-4. **SQL Injection**: Use parameterized queries ($1, $2, etc.) for all database operations.
-5. **CSRF Protection**: Include CSRF tokens in all forms.
-6. **Session Security**: Use secure, httpOnly cookies in production.
-
-## Database Operations
-
-### Migrations
-
-Migrations are SQL files in `db/migrations/` that create or modify database tables.
-
-To create a new migration:
-1. Create a new file: `db/migrations/00X_description.sql`
-2. Write your SQL (CREATE TABLE, ALTER TABLE, etc.)
-3. Run `npm run migrate`
-
-### Seeds
-
-Seeds are SQL files in `db/seeds/` that populate the database with initial or test data.
-
-To create a new seed:
-1. Create a new file: `db/seeds/00X_description.sql`
-2. Write your INSERT statements
-3. Run `npm run seed`
-
-### Parameterized Queries
-
-Always use parameterized queries to prevent SQL injection:
-
-```javascript
-// ❌ Bad (SQL injection vulnerable)
-const result = await db.query(`SELECT * FROM users WHERE email = '${email}'`);
-
-// ✅ Good (parameterized)
-const result = await db.query('SELECT * FROM users WHERE email = $1', [email]);
-```
-
-## Contributing
-
-When contributing to this project:
-1. Follow the existing code style
-2. Run `npm run lint` before committing
-3. Test your changes thoroughly
-4. Update documentation as needed
-
-## Resources
+## Learning Resources
 
 - [Express.js Documentation](https://expressjs.com/)
 - [EJS Documentation](https://ejs.co/)
 - [PostgreSQL Documentation](https://www.postgresql.org/docs/)
 - [Node.js Documentation](https://nodejs.org/docs/)
-- [Helmet Documentation](https://helmetjs.github.io/)
+- [OWASP Security Guide](https://owasp.org/)
+
+## Contributing
+
+This is a teaching template. Feel free to:
+- Report issues
+- Suggest improvements
+- Submit pull requests
+- Use it for your own projects
+
+## License
+
+ISC

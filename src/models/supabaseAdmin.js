@@ -1,3 +1,4 @@
+//The admin client is used for uploading files to supabase.
 const { createClient } = require("@supabase/supabase-js");
 const dotenv = require("dotenv");
 

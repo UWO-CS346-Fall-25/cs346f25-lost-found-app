@@ -30,57 +30,89 @@ A teaching template for building secure web applications with Node.js, Express, 
    # Edit .env with your database credentials
    ```
 
-4. **Set up PostgreSQL database**
+4. **Start the application**
    ```bash
-   # Create database (adjust credentials as needed)
-   createdb your_database_name
+   npm start
    ```
 
-5. **Run migrations**
-   ```bash
-   npm run migrate
-   ```
-
-6. **Seed database (optional)**
-   ```bash
-   npm run seed
-   ```
-
-7. **Start the application**
-   ```bash
-   npm run dev
-   ```
-
-8. **Open your browser**
+5. **Open your browser**
    ```
    http://localhost:3000
    ```
 
-## Project Structure
+## Project Structure (detailed)
 
 ```
+.
 ├── src/
-│   ├── server.js           # Server entry point
-│   ├── app.js              # Express app configuration
-│   ├── routes/             # Route definitions
-│   ├── controllers/        # Request handlers
-│   ├── models/             # Database models
-│   ├── views/              # EJS templates
-│   └── public/             # Static files (CSS, JS, images)
+│   ├── server.js                     # Server entry point (starts app)
+│   ├── app.js                        # Express app, routes & middleware
+│   ├── routes/
+│   │   ├── index.js                  # index, register, login routes
+│   │   ├── upload.js                 # upload endpoints and file handling
+│   │   ├── users.js                  # user-related routes (profile, claims)
+│   │   └── buildingHours.js          # API route for building hours proxy
+│   ├── controllers/
+│   │   ├── indexController.js        # homepage / search helpers
+│   │   ├── allItemsController.js     # list & query uploads
+│   │   ├── uploadController.js       # upload handling
+│   │   ├── userController.js         # user-related actions
+│   │   └── buildingHoursController.js# fetch building hours
+│   ├── models/
+│   │   ├── db.js                     # PostgreSQL pool & query helper
+│   │   ├── supabaseClient.js         # public supabase client (anon)
+│   │   ├── supabaseAdmin.js          # admin/service-role client
+│   │   └── User.js                   # (optional) user model utils
+│   ├── views/
+│   │   ├── partials/
+│   │   │   ├── header.ejs
+│   │   │   └── footer.ejs
+│   │   ├── layout.ejs
+│   │   ├── allResults.ejs
+│   │   ├── upload.ejs
+│   │   ├── uploadSuccess.ejs
+│   │   ├── register.ejs
+│   │   ├── login.ejs
+│   │   └── error.ejs
+│   └── public/
+│       ├── css/                      # project stylesheets
+│       │   ├── allResults.css
+│       │   ├── global.css
+│       │   ├── login.css
+│       │   ├── register.css
+│       │   ├── style.css
+│       │   ├── upload.css
+│       │   └── uploadSuccess.css
+│       ├── js/                       # client-side scripts
+│       │   ├── claimAlert.js
+│       │   ├── login.js
+│       │   ├── main.js
+│       │   └── register.js
+│       └── uploads/                  # user-uploaded files (gitignored)
+│           ├── <hash>                # many uploaded file entries
+│           └── ...
 ├── db/
-│   ├── migrations/         # Database migrations
-│   ├── seeds/              # Database seeds
-│   ├── migrate.js          # Migration runner
-│   ├── seed.js             # Seed runner
-│   └── reset.js            # Database reset script
-├── docs/                   # Documentation
-│   ├── README.md           # Documentation overview
-│   ├── SETUP.md            # Setup guide
-│   └── ARCHITECTURE.md     # Architecture details
-├── .env.example            # Environment variables template
-├── .eslintrc.json          # ESLint configuration
-├── .prettierrc.json        # Prettier configuration
-└── package.json            # Dependencies and scripts
+│   ├── migrate.js                    # runs SQL migrations
+│   ├── seed.js                       # runs SQL seeds
+│   ├── reset.js                      # reset DB (used with caution)
+│   ├── migrations/
+│   │   └── 001_create_users_table.sql
+│   └── seeds/
+│       └── 001_seed_users.sql
+├── docs/
+│   ├── README.md                     # documentation (this file)
+│   ├── SETUP.md                      # setup & environment notes
+│   └── ARCHITECTURE.md               # high-level architecture
+├── public/                           # public assets used in builds / demo
+│   └── uploads/                      # demo uploads (kept for examples)
+├── .env.example
+├── CONTRIBUTING.md
+├── eslint.config.js
+├── package.json
+├── QUICKSTART.md
+├── README.md                         # project README (root)
+└── other project files (LICENSE, docs, config)
+
 ```
 
 ## Available Scripts
