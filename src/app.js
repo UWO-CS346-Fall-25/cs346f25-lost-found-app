@@ -85,6 +85,38 @@ app.use((req, res, next) => {
 });
 
 // -------------------------
+// ADMIN HELPERS
+// -------------------------
+
+// Check if a user is an admin
+async function isAdmin(userId) {
+  const { data, error } = await supabase
+    .from("userroles")
+    .select("role")
+    .eq("auth_id", userId)
+    .single();
+
+  console.log(userId);
+  if (error || !data) return false;
+  return data.role === "admin";
+}
+
+// Middleware to protect admin-only routes
+async function requireAdmin(req, res, next) {
+  if (!req.session.user) {
+    return res.redirect("/login");
+  }
+
+  const admin = await isAdmin(req.session.user.id);
+  if (!admin) {
+    return res.status(403).send("Access denied — admin only.");
+  }
+
+  next();
+}
+
+
+// -------------------------
 // Route Guard
 // -------------------------
 function requireAuth(req, res, next) {
@@ -96,20 +128,141 @@ function requireAuth(req, res, next) {
 // Protected Homepage Route
 // -------------------------
 app.get("/", requireAuth, async (req, res) => {
-  // fetch lost items without rendering
-  const { lostItems } = await showAllUploads(req, res, true);
+  const building = req.query.building || "any";
 
-  // enrich each item with Google Building Hours
+  let { lostItems } = await showAllUploads(req, res, true);
+
+  // Apply filter
+  if (building !== "any") {
+    lostItems = lostItems.filter(item => item.location === building);
+  }
+
+  // Add hours
   for (let item of lostItems) {
     const info = await getBuildingHours(item.location);
-    item.hours = info.hours; // array or null
+    item.hours = info.hours;
   }
 
   res.render("allResults", {
     title: "All Results",
-    lostItems
+    lostItems,
+    building 
   });
 });
+
+
+
+
+// -------------------------
+// Protected Admin Approval Route
+// -------------------------
+app.get("/admin/claims", requireAdmin, async (req, res) => {
+  // Get all pending claims
+  const { data: claims, error: claimsError } = await supabase
+    .from("claimed_items")
+    .select("*")
+    .eq("status", 1); // pending
+
+  if (claimsError) {
+    console.error("Claims error:", claimsError);
+    return res.status(500).send("Error fetching claims.");
+  }
+
+  // 2Get all items referenced by claims
+  const itemIds = claims.map(c => c.item_id);
+  const { data: items, error: itemsError } = await supabase
+    .from("Items")
+    .select("*")
+    .in("id", itemIds);
+
+  if (itemsError) {
+    console.error("Items error:", itemsError);
+    return res.status(500).send("Error fetching items.");
+  }
+
+  //  Merge items into claims
+  const claimsWithItems = claims.map(claim => {
+    return {
+      ...claim,
+      item: items.find(i => i.id === claim.item_id)
+    };
+  });
+
+  console.log("ADMIN CLAIMS QUERY RESULTS:", claimsWithItems);
+
+  res.render("admin", {
+  title: "Claims",
+  claims: claimsWithItems
+});
+});
+
+
+
+
+// Approve a claim
+app.post("/admin/claims/:id/approve", requireAdmin, async (req, res) => {
+  const claimId = req.params.id;
+
+  // Fetch the claim so we know its item_id
+  const { data: claim, error: claimError } = await supabase
+    .from("claimed_items")
+    .select("item_id")
+    .eq("id", claimId)
+    .single();
+
+  if (claimError) {
+    console.error("Error fetching claim:", claimError);
+    return res.status(500).send("Could not fetch claim");
+  }
+
+  // 1 → approved
+  await supabase
+    .from("claimed_items")
+    .update({ status: 2 })
+    .eq("id", claimId);
+
+  // update associated item
+  await supabase
+    .from("Items")
+    .update({ status: 2 })
+    .eq("id", claim.item_id);
+
+  res.redirect("/admin/claims");
+});
+
+
+// Deny a claim
+app.post("/admin/claims/:id/deny", requireAdmin, async (req, res) => {
+  const claimId = req.params.id;
+
+  // Fetch the claim first
+  const { data: claim, error: claimError } = await supabase
+    .from("claimed_items")
+    .select("item_id")
+    .eq("id", claimId)
+    .single();
+
+  if (claimError) {
+    console.error("Error fetching claim:", claimError);
+    return res.status(500).send("Could not fetch claim");
+  }
+
+  // 3 → denied
+  await supabase
+    .from("claimed_items")
+    .update({ status: 3 })
+    .eq("id", claimId);
+
+  // Set item back to available
+  await supabase
+    .from("Items")
+    .update({ status: 0 })
+    .eq("id", claim.item_id);
+
+  res.redirect("/admin/claims");
+});
+
+
 
 // -------------------------
 // Other Routes
@@ -139,6 +292,50 @@ app.get("/logout", (req, res) => {
 });
 
 // -------------------------
+// Claim Logic
+// -------------------------
+
+
+app.post("/claim", async (req, res) => {
+  const { item_id } = req.body;
+  console.log("starting claim process...");
+
+  // You must have user authentication set up
+  const user_id = req.session.user?.id; 
+  if (!user_id) {
+    return res.status(401).send("You must be logged in to claim an item.");
+  }
+
+  try {
+    // Insert the claim request
+    const { data, error } = await supabase
+      .from("claimed_items")
+      .insert({
+        user_id: user_id,
+        status: 1, // 1 = pending
+        claim_time: new Date(),
+        item_id: item_id   
+      });
+
+    if (error) throw error;
+
+    await supabase
+    .from("Items")
+    .update({ status: 1 }) // 1 = claimed/pending
+    .eq("id", item_id);
+
+
+    
+
+    res.redirect("/");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error submitting claim.");
+  }
+});
+
+
+// -------------------------
 // Registration Logic
 // -------------------------
 app.post("/register", async (req, res) => {
@@ -166,25 +363,44 @@ app.post("/register", async (req, res) => {
 // -------------------------
 // Login Logic
 // -------------------------
+
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
-  if (!email || !password)
-    return res.status(400).send("Missing email or password.");
-
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data: authData, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
 
   if (error) {
-    console.error("Login failed:", error.message);
-    return res.status(401).render("login", {
-      title: "login",
-      error: "Invalid email or password."
+    return res.render("login", {
+      title: "Login",
+      error: "Invalid email or password",
+      user: null
     });
   }
 
-  req.session.user = { id: data.user.id, email: data.user.email };
+  const authId = authData.user.id;
+
+  // Get the role from the userroles table
+  const { data: roleData, error: roleError } = await supabase
+    .from("userroles")
+    .select("role")
+    .eq("auth_id", authId)
+    .single();
+
+  // Store user in session INCLUDING ROLE
+  req.session.user = {
+    id: authId,
+    email: authData.user.email,
+    role: roleData?.role || "user"  // default role
+  };
+
   res.redirect("/");
 });
+
+
+
 
 // -------------------------
 // 404 Handler

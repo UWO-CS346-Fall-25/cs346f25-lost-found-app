@@ -17,6 +17,7 @@ exports.showAllUploads = async (req, res, returnDataOnly = false) => {
     const { data: items, error } = await supabase
       .from('Items')
       .select('id, item_name, item_description, building_found, photo_url')
+      .eq('status', 0) 
       .order('id', { ascending: false });
 
     if (error) {

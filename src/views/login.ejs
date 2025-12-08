@@ -22,6 +22,10 @@
             <label for="password">Password</label>
             <input id="password" name="password" type="password" placeholder="Password">
             <span id="passwordError" class="error-message"></span>
+            <% if (typeof error !== 'undefined' && error) { %>
+                <p class="error-message"><%= error %></p>
+                <% } %>
+
 
             <button type="submit" id="submit-credentials">Submit</button>
         </form>

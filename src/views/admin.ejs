@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin – Approve Claims</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <%- include('partials/header'); %>
+    <h1>Pending Claims</h1>
+
+    <% if (claims.length === 0) { %>
+        <p>No pending claims.</p>
+    <% } %>
+
+    <% claims.forEach(claim => { %>
+        <div class="claim-card">
+            <h3>Claim #<%= claim.id %></h3>
+
+            <p><strong>Item:</strong> <%= claim.item.item_name %></p>
+            <p><strong>Description:</strong> <%= claim.item.item_description %></p>
+            <p><strong>User:</strong> <%= claim.user_id %></p>
+
+            <form method="POST" action="/admin/claims/<%= claim.id %>/approve">
+                <button class="btn primary">Approve</button>
+                </form>
+
+                <form method="POST" action="/admin/claims/<%= claim.id %>/deny">
+                <button class="btn outline">Deny</button>
+            </form>
+
+        </div>
+    <% }); %>
+
+
+</body>
+</html>
