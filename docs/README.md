@@ -1,22 +1,12 @@
-# CS346 Semester Project Template
-
-A teaching template for building secure web applications with Node.js, Express, EJS, and PostgreSQL.
-
-## Features
-
-- 🚀 **Node.js 20** + **Express 4** - Modern JavaScript backend
-- 🎨 **EJS** - Server-side templating
-- 🗄️ **PostgreSQL** - Reliable relational database
-- 🔒 **Security First** - Helmet, CSRF protection, secure sessions
-- 📝 **Clean Code** - ESLint, Prettier, best practices
-- 🎓 **Educational** - Well-documented, instructional code
+# Project overview
+This project is a lost and found app.  It allows users to report and claim lost items around the uw oshkosh campus.  It utilizes supabase and the Google Places API.  
 
 ## Quick Start
 
 1. **Clone the repository**
    ```bash
    git clone <your-repository-url>
-   cd cs346-semester-project-template
+   cd cs346-lost-found-app
    ```
 
 2. **Install dependencies**

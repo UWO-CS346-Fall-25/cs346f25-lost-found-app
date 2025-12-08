@@ -14,13 +14,20 @@
           
           <% if (user) { %>
               <li><a href="/">Home</a></li>
-              <li><a href="upload">Upload</a></li>
+
+              <% if (user.role === "admin") { %>
+                  <li><a href="/admin/claims">Claims</a></li>
+              <% } %>
+
+              <li><a href="/upload">Upload</a></li>
               <li><a href="/logout" class="logout-link">Logout</a></li>
-            <% } else { %>
-              <li><a href="upload">Upload</a></li>
+
+          <% } else { %>
+              <li><a href="/upload">Upload</a></li>
               <li><a href="/login">Login</a></li>
               <li><a href="/register">Register</a></li>
-            <% } %>
+          <% } %>
+
         </ul>
       </div>
     </nav>
