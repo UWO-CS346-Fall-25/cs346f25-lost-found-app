@@ -272,9 +272,11 @@ app.use('/upload', uploadRoutes);
 app.use("/api/building-hours", buildingHoursRoutes);
 
 // Registration Page
+// Registration Page
 app.get('/register', (req, res) => {
-  res.render('register', { title: 'register' });
+  res.render('register', { title: 'Register', error: null });
 });
+
 
 // Login Page
 app.get('/login', (req, res) => {
@@ -341,10 +343,13 @@ app.post("/claim", async (req, res) => {
 app.post("/register", async (req, res) => {
   const { email, password, confirmPassword } = req.body;
 
-  if (!email || !password || !confirmPassword)
-    return res.status(400).send("Missing fields.");
-  if (password !== confirmPassword)
-    return res.status(400).send("Passwords do not match.");
+  if (!email || !password || !confirmPassword) {
+    return res.render("register", { title: "Register", error: "All fields are required." });
+  }
+
+  if (password !== confirmPassword) {
+    return res.render("register", { title: "Register", error: "Passwords do not match." });
+  }
 
   const { error } = await supabaseAdmin.auth.admin.createUser({
     email,
@@ -354,11 +359,12 @@ app.post("/register", async (req, res) => {
 
   if (error) {
     console.error(error);
-    return res.status(400).send(`Error: ${error.message}`);
+    return res.render("register", { title: "Register", error: "An account with that email already exists." });
   }
 
   res.redirect("/login?registered=1");
 });
+
 
 // -------------------------
 // Login Logic
