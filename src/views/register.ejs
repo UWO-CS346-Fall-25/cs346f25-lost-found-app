@@ -18,7 +18,9 @@
         <form id="credentials" action="/register" method="POST">
             <label for="email"></label>
             <input id="emailBox" for="email" type="text" placeholder="Email" name="email">
-            <span id="emailError" class="error-message"></span>
+            <% if (error) { %>
+                <span class="error-message" style="color:red;"><%= error %></span>
+            <% } %>
             
 
             <label for="password"></label>
